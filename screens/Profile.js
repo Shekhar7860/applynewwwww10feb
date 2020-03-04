@@ -14,6 +14,14 @@ export default class Profile extends Component {
   }
 
   componentDidMount = () => {
+
+    const {navigation} = this.props;
+    navigation.addListener('willFocus', () => this.getHomePageData());
+  
+      BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  getHomePageData = () => {
     service.getUserData('userData').then((res) => {
       console.log('localData', res)
       var data = JSON.parse(res);
@@ -23,9 +31,7 @@ export default class Profile extends Component {
     //  Alert.alert("loggin successfully")
           // this.props.navigation.navigate('Profile')
       })
-      BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   }
-
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
   }

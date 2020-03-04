@@ -32,6 +32,9 @@ export default class Login extends Component {
 
   }
 
+  componentDidMount = () => {
+   
+  }
   signUp = () =>{
     this.setState(() => ({ cardheight:370}));
     if ( !service.validateEmail(this.state.email)) {
@@ -95,7 +98,7 @@ export default class Login extends Component {
            this.setState ({ visible: true});
          service.login(this.state.username, this.state.password).then((res) => {
            console.log('resss0', res)
-           this.setState({username :"", password :""})
+         //  this.setState({username :"", password :""})
            
            if(res.message !=="Unknown username. Check again or try your email address."){
              service.saveUserData('tokenData', res)

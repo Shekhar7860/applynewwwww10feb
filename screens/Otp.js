@@ -24,20 +24,11 @@ import {colors, fonts, padding, dimensions, align} from './base.js';
 
   componentDidMount()
    {
-      // if(this.props.navigation.state.params)
-      // {
-      //   if(this.props.navigation.state.params.type)
-      //   {
-      //     console.log(this.props.navigation.state.params.type.mobile);
-      //     this.setState({ mobile: this.props.navigation.state.params.type.mobile})
-      //     this.setState({ type:this.props.navigation.state.params.type.type})
-      //   }
-      //   else if (this.props.navigation.state.params.mobile)
-      //   {
-      //     this.setState({ mobile: this.props.navigation.state.params.mobile.mobile})
-      //     this.setState({ type:this.props.navigation.state.params.mobile.type})
-      //   }
-      // }
+      if(this.props.navigation.state.params)
+      {
+          console.log(this.props.navigation.state.params.number);
+          this.setState({ mobile: this.props.navigation.state.params.number})
+      }
    }
  
    gotoSignIn = () =>

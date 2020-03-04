@@ -80,9 +80,10 @@ export default class Register extends Component {
       console.log('resssss', res)
       if(res.code !=="existing_user_login" || res.code !=="existing_user_email" ){
           // console.log(res, 'resss')
-  Alert.alert('User Created SuccessFully')
+ // Alert.alert('User Created SuccessFully')
+ service.saveUserData('userData', res)
    this.setState({visible:false})
-     this.props.navigation.navigate('Otp')
+     this.props.navigation.navigate('Otp', { number : this.state.mobile})
       }
       else {
         Alert.alert(res.message)
