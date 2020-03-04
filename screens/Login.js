@@ -99,8 +99,9 @@ export default class Login extends Component {
          service.login(this.state.username, this.state.password).then((res) => {
            console.log('resss0', res)
          //  this.setState({username :"", password :""})
-           
-           if(res.message !=="Unknown username. Check again or try your email address."){
+           if(res.data !== undefined)
+           {
+           if(res.message !=="Unknown username. Check again or try your email address." &&   res.data.status !== 403){
              service.saveUserData('tokenData', res)
                var data = {
    "username": this.state.username ,"password": this.state.password
@@ -135,10 +136,58 @@ export default class Login extends Component {
     Alert.alert("NetWork Error")
    });
            }
+
+          
+
            else {
                this.setState({visible:false})
             Alert.alert("Wrong Userame or Password")
            }
+          }
+          else {
+            if(res.message !=="Unknown username. Check again or try your email address."){
+              service.saveUserData('tokenData', res)
+                var data = {
+    "username": this.state.username ,"password": this.state.password
+    }
+   fetch('https://www.mbbsbangladesh.com/wp-json/wp/v2/users/me', {
+   method: 'POST',
+   headers: {
+     'Accept': 'application/json',
+     'Content-Type': 'application/json',
+     'authorization': 'Bearer ' + res.token
+   },
+   body: JSON.stringify(data)
+ }).then((response) => 
+     response.json().then((userRes) => {
+       console.log('resssss', userRes)
+       service.saveUserData('tokenData',res)
+       service.saveUserData('userData', userRes)
+       if(res.message !=="Invalid parameter(s): username, password"){
+           // console.log(res, 'resss')
+   // Alert.alert('Login SuccessFully')
+    this.setState({visible:false})
+      this.props.navigation.navigate('Profile')
+       }
+       else {
+         this.setState({username :"", password :""})
+         Alert.alert("Wrong Username or Password")
+       }
+ }))
+    .catch((error) => {
+     this.setState({username :"", password :""})
+     this.setState({visible:false})
+     Alert.alert("NetWork Error")
+    });
+            }
+ 
+           
+ 
+            else {
+                this.setState({visible:false})
+             Alert.alert("Wrong Userame or Password")
+            }
+          }
           
    
 

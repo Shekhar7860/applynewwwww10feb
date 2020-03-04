@@ -67,10 +67,30 @@ export default class SignuUp extends Component {
   // }, 3000)
     service.calculator(this.state.token, this.state.stname, this.state.parentname, this.state.email, this.state.phone, this.state.score, this.state.sub,  this.state.sub2, this.state.sub3, this.state.sub4, this.state.sub5, this.state.bio, this.state.phy, this.state.che, this.state.value, this.state.picker1, this.state.picker2).then((res) => {
    console.log('res', res)
+  
     setTimeout(() => {
       this.setState({visible:false})
-      this.props.navigation.navigate('Thanks', {data:res})
+      if(res.data !== undefined){
+        if(res.data.status !== 403)
+        {
+        this.props.navigation.navigate('Thanks', {data:res})
+        }
+        else {
+          Alert.alert('Network Error')
+        }
+      }
+      else {
+        if(res)
+        {
+        this.props.navigation.navigate('Thanks', {data:res})
+        }
+        else {
+          Alert.alert('Network Error')
+        }
+      }
+     
   }, 1000)
+
    
    if(res){
   //   setTimeout(() => {
